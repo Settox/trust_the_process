@@ -1,5 +1,5 @@
-- name: Install dependencies
+name: Install dependencies
   run: npm ci
 
-- name: Build
+name: Build
   run: npm run build
