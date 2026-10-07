@@ -1,0 +1,25 @@
+/* starfield.css — campo stellare, nebulose */
+#nebula {
+  position: fixed; inset: -6%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 28%, rgba(90, 70, 220, .55), transparent 62%),
+    radial-gradient(ellipse 60% 50% at 80% 72%, rgba(190, 70, 170, .40), transparent 64%),
+    radial-gradient(ellipse 65% 50% at 62% 14%, rgba(50, 120, 220, .42), transparent 58%),
+    radial-gradient(ellipse 70% 55% at 38% 90%, rgba(40, 170, 190, .32), transparent 62%),
+    radial-gradient(ellipse 50% 42% at 88% 24%, rgba(120, 80, 210, .32), transparent 60%),
+    radial-gradient(ellipse 90% 70% at 50% 50%, rgba(20, 24, 60, .65), transparent 70%),
+    #05060f;
+  animation: nebula 78s ease-in-out infinite alternate;
+}
+@keyframes nebula {
+  from { transform: scale(1) translate(0,0) rotate(0deg); }
+  to   { transform: scale(1.18) translate(-2.5%,2.5%) rotate(3deg); }
+}
+
+#stars {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #nebula { animation: none; }
+}

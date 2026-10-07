@@ -1,0 +1,50 @@
+/* responsive.css — mobile e schermi stretti */
+@media (max-width: 860px) {
+  .rail { width: 60px; padding: 10px 6px; }
+  .rail-lbl { display: none; }
+  .topbar { gap: 8px; padding: 0 10px; }
+  .topbar-title .tb-kicker { display: none; }
+  .topbar-actions .ctl { padding: 6px 8px; }
+  .topbar-actions .ctl span { display: none; }
+  #view-home { padding: 20px 16px 40px; }
+  #view-settings { padding: 16px 16px 48px; }
+  .collection-full { padding: 10px 12px; }
+}
+
+@media (max-width: 640px) {
+  .rail {
+    position: fixed; bottom: 0; left: 0; right: 0; top: auto;
+    width: 100%; height: 60px; flex-direction: row;
+    padding: 6px 4px; gap: 2px; border-right: none; border-top: 1px solid var(--line);
+    overflow-x: auto; overflow-y: hidden;
+  }
+  .rail-items { flex-direction: row; gap: 2px; width: 100%; }
+  .rail-spacer { display: none; }
+  .rail-brand { display: none; }
+  .rail-item { flex: 1; padding: 4px 2px; font-size: 9px; min-height: 44px; }
+  .rail-item .rail-lbl { display: none; }
+  .content { padding-bottom: 68px; }
+  .view { padding-bottom: 76px; }
+
+  /* topbar compatta: solo icone, niente indicatore di stato */
+  .topbar { height: 54px; gap: 6px; padding: 0 8px; }
+  .topbar .status { display: none; }
+  .topbar-title .tb-name { font-size: 12px; max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar-actions { gap: 5px; }
+  .topbar-actions button.ctl { padding: 9px 10px; font-size: 0; gap: 0; min-width: 44px; min-height: 44px; justify-content: center; }
+  .topbar-actions button.ctl svg { width: 17px; height: 17px; }
+
+  /* subbar mappa: tab e ricerca su due righe se serve */
+  .map-subbar { flex-wrap: wrap; gap: 6px; padding: 6px 10px; }
+  .tabs { max-width: 100%; }
+  .node-search { flex: 1; min-width: 180px; }
+  .node-search input { width: 100%; }
+
+  .collection-sidebar {
+    position: absolute; left: 0; top: 0; bottom: 0; z-index: 20;
+    width: min(320px, 88vw); box-shadow: var(--shadow-2);
+  }
+  .collection-sidebar.collapsed { width: 0; min-width: 0; }
+  .home-grid { grid-template-columns: 1fr; }
+  #ctxBar { left: 10px; right: 10px; }
+}

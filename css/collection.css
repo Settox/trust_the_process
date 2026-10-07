@@ -1,0 +1,79 @@
+/* collection.css — Raccolta (sidebar + full) */
+#collectionHost, #collectionHostFull { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+
+.collection-full { height: 100%; padding: 20px 28px; overflow: auto; }
+
+.coll-head { padding: 12px 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 8px; }
+.coll-head h2 { font-size: 12px; margin: 0; text-transform: uppercase; letter-spacing: 1.4px; color: var(--text-dim); font-weight: 700; }
+.coll-head .grow { flex: 1; }
+
+.coll-tabs { display: flex; gap: 6px; padding: 8px 12px 0; }
+.coll-tabs button { flex: 1; background: var(--surface-2); border: 1px solid var(--line); color: var(--text-dim); border-radius: 9px; padding: 6px 8px; font-size: 12px; cursor: pointer; }
+.coll-tabs button.on { border-color: var(--accent); color: #fff; background: linear-gradient(180deg,#25306a,#1a2150); }
+.coll-tabs .n { opacity: .7; font-size: 11px; }
+
+.coll-search { display: flex; gap: 4px; padding: 8px 12px; border-bottom: 1px solid var(--line); align-items: center; }
+.coll-search input { flex: 1; min-width: 0; background: rgba(4,6,14,.6); border: 1px solid var(--line-2); border-radius: 9px; color: #fff; padding: 7px 10px; font-size: 12.5px; outline: none; }
+
+#collection { overflow-y: auto; overflow-x: hidden; flex: 1 1 0; min-height: 0; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+#collection > * { flex: none; }
+.collection-full #collection { padding: 4px 0 60px; }
+
+#searchResults { display: none; overflow-y: auto; flex: 1 1 0; min-height: 0; padding: 6px 12px 12px; }
+#searchResults.show { display: block; }
+.sr-vol { font-size: 12px; font-weight: 700; color: #fff; margin: 12px 0 5px; }
+.sr-item { font-size: 11.5px; color: var(--text-dim); padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 5px; cursor: pointer; line-height: 1.5; word-break: break-word; }
+.sr-item:hover { border-color: var(--accent); color: var(--text); }
+.sr-item mark { background: rgba(255,210,90,.55); color: #fff; border-radius: 2px; padding: 0 1px; }
+.sr-pg { color: var(--accent); font-weight: 700; margin-right: 6px; }
+
+.folder { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; }
+.folder-head { display: flex; align-items: center; gap: 6px; padding: 8px 10px; cursor: pointer; background: linear-gradient(180deg, rgba(30,34,66,.6), transparent); }
+.folder-head .tri { font-size: 11px; color: var(--text-dim); transition: .15s; width: 14px; flex: none; }
+.folder.open .folder-head .tri { transform: rotate(90deg); }
+.folder-head .fname { flex: 1; background: transparent; border: none; color: #fff; font-size: 13px; font-weight: 600; outline: none; min-width: 0; }
+.folder-body { display: none; padding: 4px 8px 8px; flex-direction: column; gap: 8px; }
+.folder.open .folder-body { display: flex; }
+
+.volume { background: rgba(8,11,24,.7); border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+.volume.flash { animation: flash 1.2s ease; }
+@keyframes flash { 0%,60% { box-shadow: 0 0 0 2px var(--accent); } 100% { box-shadow: none; } }
+.volume-cover { display: none; width: 100%; border-radius: 8px; margin-bottom: 6px; overflow: hidden; position: relative; aspect-ratio: 2/3; cursor: pointer; background: #0a0d20; border: 1px solid var(--line); }
+.volume-cover.has { display: block; }
+.volume-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.volume-cover .cov-plus { position: absolute; right: 5px; bottom: 5px; background: rgba(10,13,32,.9); border: 1px solid var(--line-2); color: var(--text-dim); border-radius: 6px; font-size: 11px; padding: 2px 7px; cursor: pointer; }
+.cover-placeholder { width: 100%; border-radius: 8px; padding: 9px 0; font-size: 11px; color: var(--text-dim); background: rgba(0,0,0,.2); border: 1px dashed var(--line-2); cursor: pointer; text-align: center; margin-bottom: 6px; }
+.volume-head { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; }
+.volume-name { flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--line); color: #fff; font-size: 12.5px; font-weight: 600; padding: 3px 2px; outline: none; min-width: 0; }
+.volume-btns { display: flex; gap: 5px; margin-bottom: 6px; flex-wrap: wrap; align-items: center; }
+.pdf-chip { font-size: 10.5px; color: var(--text-dim); background: rgba(0,0,0,.3); border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; white-space: nowrap; }
+.volume-text { width: 100%; min-height: 92px; resize: vertical; background: rgba(4,6,14,.6); color: var(--text); border: 1px solid var(--line-2); border-radius: 8px; padding: 6px; font-size: 12px; line-height: 1.55; font-family: inherit; outline: none; }
+.volume-cut { width: 100%; margin-top: 6px; }
+
+.vol-tog { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 2px; }
+.vol-grip, .fold-grip { cursor: grab; color: var(--text-dim); display: inline-flex; align-items: center; padding: 2px 1px; flex: none; }
+.volume.dragging, .folder.dragging { opacity: .4; }
+.volume.drop-before, .folder.drop-before { box-shadow: 0 -3px 0 0 var(--accent); }
+.volume.drop-after, .folder.drop-after { box-shadow: 0 3px 0 0 var(--accent); }
+.folder.drop-into > .folder-head { outline: 2px solid var(--accent); outline-offset: -2px; }
+.drop-root { display: none; border: 1px dashed var(--accent); color: var(--accent); border-radius: 9px; padding: 8px; text-align: center; font-size: 11.5px; }
+#collection.dragging-vol .drop-root { display: block; }
+.drop-root.over { background: rgba(138,180,255,.14); }
+
+/* dropzone "Carica file" */
+.upload-dropzone {
+  border: 1.5px dashed var(--accent-glow); border-radius: var(--r-md); padding: 14px;
+  text-align: center; color: var(--text-dim); font-size: 12.5px; margin: 4px 12px 8px;
+  transition: background var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.upload-dropzone.drag { background: rgba(138,180,255,.14); border-color: var(--accent); color: var(--text); }
+
+.lang-head { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-dim); font-weight: 700; margin: 6px 2px 0; }
+.tr-chip { font-size: 10.5px; color: var(--accent); background: rgba(138,180,255,.1); border: 1px solid rgba(138,180,255,.35); border-radius: 6px; padding: 2px 7px; white-space: nowrap; }
+
+/* drag & drop volumi -> cartelle */
+.volume { cursor: grab; }
+.volume:active { cursor: grabbing; }
+.folder.drop-target { outline: 2px dashed var(--accent); outline-offset: -2px; border-radius: 10px; background: rgba(138,180,255,.10); }
+.folder-del { opacity: .5; }
+.folder-head:hover .folder-del { opacity: 1; }

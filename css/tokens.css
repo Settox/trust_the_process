@@ -1,0 +1,74 @@
+/* ============================================================
+   Spazio Teorie v2 — Design token (identità stellare)
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  /* sfondo spaziale */
+  --space-950: #03040c;
+  --space-900: #070a1a;
+  --space-800: #0b0f24;
+  --space-700: #101633;
+
+  /* superfici (vetro cosmico — molto traslucide per far vedere le stelle) */
+  --surface: rgba(13, 17, 40, .35);
+  --surface-2: rgba(17, 22, 50, .42);
+  --surface-3: rgba(26, 32, 64, .50);
+  --surface-solid: #10142c;
+  --line: rgba(255, 255, 255, .08);
+  --line-2: rgba(255, 255, 255, .16);
+  --line-strong: rgba(160, 180, 255, .35);
+
+  /* testo */
+  --text: #edf1ff;
+  --text-dim: #9aa4c8;
+  --text-faint: #616b95;
+
+  /* accenti — sfumatura cosmica */
+  --accent: #8fb4ff;
+  --accent-2: #c4a7ff;
+  --accent-3: #7ee0d9;
+  --accent-gradient: linear-gradient(135deg, #7dd3fc, #8fb4ff 45%, #c4a7ff);
+  --accent-glow: rgba(138, 180, 255, .42);
+  --accent-soft: rgba(138, 180, 255, .14);
+  --danger: #ff6b9d;
+  --ok: #6ee7a0;
+  --warn: #ffd166;
+  --star: #ffffff;
+  --star-warm: #ffe3b8;
+
+  /* forme */
+  --r-sm: 9px;
+  --r-md: 13px;
+  --r-lg: 19px;
+  --r-xl: 26px;
+  --shadow-1: 0 4px 24px rgba(0, 0, 0, .35);
+  --shadow-2: 0 18px 60px rgba(0, 0, 0, .55);
+  --shadow-glow: 0 0 0 1px rgba(138, 180, 255, .18), 0 8px 40px rgba(120, 140, 255, .25);
+
+  /* motion */
+  --ease: cubic-bezier(.22, .9, .26, 1);
+  --dur: 180ms;
+
+  /* tipografia */
+  --font-ui: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+
+  /* palette nodi/linee */
+  --pal-0: #8fb4ff;
+  --pal-1: #ff6b9d;
+  --pal-2: #ffd166;
+  --pal-3: #6ee7a0;
+  --pal-4: #5fd6cf;
+  --pal-5: #c4a7ff;
+  --pal-6: #ff9e6d;
+  --pal-7: #ffffff;
+}
+
+/* utilità vetro */
+.glass {
+  background: var(--surface);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid var(--line);
+}

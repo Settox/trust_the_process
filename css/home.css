@@ -1,0 +1,122 @@
+/* home.css — Home stellare */
+#view-home { padding: 34px 42px 56px; }
+
+.home-hero { margin-bottom: 28px; }
+.home-hero .eyebrow {
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent);
+  font-weight: 700; margin-bottom: 8px; text-shadow: 0 0 14px var(--accent-glow);
+}
+.home-hero h1 {
+  margin: 0 0 8px; font-size: 30px; font-weight: 700; letter-spacing: .2px;
+  background: linear-gradient(120deg, #fff, #cfe1ff 70%, #d6c8ff);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.home-hero p { margin: 0; color: var(--text-dim); max-width: 560px; font-size: 14.5px; }
+
+/* crea / entra */
+.home-create {
+  display: flex; gap: 10px; margin-bottom: 20px; max-width: 560px;
+  padding: 6px; border-radius: var(--r-md);
+  background: var(--surface); border: 1px solid var(--line);
+  backdrop-filter: blur(14px);
+}
+.home-create input {
+  flex: 1; min-width: 0; border: none; background: transparent; color: var(--text);
+  padding: 9px 12px; font-size: 14px; outline: none;
+}
+.home-create input::placeholder { color: var(--text-faint); }
+.home-create button { flex: none; border-radius: var(--r-sm); font-weight: 600; }
+
+/* toolbar */
+.home-toolbar { display: flex; gap: 10px; margin-bottom: 26px; align-items: center; }
+.home-toolbar .searchbox {
+  flex: 1; max-width: 400px; display: flex; align-items: center; gap: 9px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 9px 13px; color: var(--text-faint); backdrop-filter: blur(14px);
+  transition: border-color var(--dur) var(--ease);
+}
+.home-toolbar .searchbox:focus-within { border-color: var(--line-strong); }
+.home-toolbar .searchbox input { flex: 1; border: none; background: transparent; color: var(--text); outline: none; font-size: 13.5px; }
+.home-toolbar select { padding: 9px 12px; border-radius: var(--r-md); background: var(--surface-2); border: 1px solid var(--line); color: var(--text-dim); font-size: 13px; }
+
+.home-sub {
+  font-size: 12px; text-transform: uppercase; letter-spacing: 1.8px; color: var(--text-faint);
+  margin: 30px 0 16px; font-weight: 700; display: flex; align-items: center; gap: 10px;
+}
+.home-sub::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--line-2), transparent); }
+
+/* card personale */
+.home-personal {
+  position: relative; overflow: hidden;
+  background: linear-gradient(150deg, rgba(138, 180, 255, .22), rgba(196, 167, 255, .10) 60%, rgba(126, 224, 217, .08)), var(--surface);
+  border: 1px solid var(--line-strong); border-radius: var(--r-xl); padding: 22px 24px;
+  display: flex; align-items: center; gap: 18px; cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease), border-color var(--dur) var(--ease);
+  backdrop-filter: blur(16px);
+}
+.home-personal::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at 85% 20%, rgba(196, 167, 255, .25), transparent 42%);
+}
+.home-personal:hover { transform: translateY(-3px); box-shadow: var(--shadow-glow); border-color: var(--accent); }
+.home-personal .hp-ico {
+  width: 58px; height: 58px; border-radius: 18px; flex: none;
+  background: var(--accent-gradient); display: flex; align-items: center; justify-content: center;
+  color: #0b0f24; box-shadow: 0 0 26px var(--accent-glow), 0 10px 24px rgba(0,0,0,.4);
+  transition: transform var(--dur) var(--ease);
+}
+.home-personal:hover .hp-ico { transform: scale(1.05) rotate(-5deg); }
+.home-personal .hp-ico svg { width: 28px; height: 28px; }
+.home-personal .hp-body { position: relative; z-index: 1; min-width: 0; }
+.home-personal .hp-name { font-size: 17px; font-weight: 700; }
+.home-personal .hp-desc { font-size: 13px; color: var(--text-dim); margin-top: 2px; }
+.home-personal .hp-open { margin-left: auto; position: relative; z-index: 1; }
+
+/* griglia costellazioni */
+.home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+
+.constellation {
+  position: relative; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: 18px; cursor: pointer; display: flex; flex-direction: column; gap: 12px;
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  backdrop-filter: blur(14px);
+}
+.constellation::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+.constellation:hover { transform: translateY(-3px); border-color: var(--line-strong); box-shadow: var(--shadow-2); }
+.constellation:hover::before { opacity: 1; }
+
+.constellation .cs-head { display: flex; align-items: center; gap: 9px; }
+.constellation .cs-star {
+  width: 30px; height: 30px; border-radius: 10px; flex: none;
+  background: var(--accent-soft); display: flex; align-items: center; justify-content: center; color: var(--accent);
+}
+.constellation .cs-star svg { width: 16px; height: 16px; }
+.constellation .cs-name { flex: 1; min-width: 0; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.constellation .cs-menu { background: none; border: none; color: var(--text-dim); cursor: pointer; font-size: 17px; padding: 3px 7px; border-radius: 8px; transition: .15s; }
+.constellation .cs-menu:hover { color: #fff; background: rgba(255,255,255,.08); }
+
+.constellation .cs-preview {
+  height: 104px; border-radius: var(--r-md); position: relative; overflow: hidden;
+  background: radial-gradient(circle at 50% 35%, rgba(138, 180, 255, .14), transparent 70%), var(--space-800);
+  border: 1px solid var(--line);
+}
+.constellation .cs-preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.constellation .cs-preview .cs-veil {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(3,4,12,.45));
+}
+
+.constellation .cs-meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-dim); align-items: center; flex-wrap: wrap; }
+.constellation .cs-meta .m { display: inline-flex; align-items: center; gap: 6px; }
+.constellation .cs-meta .presence i { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 8px var(--ok); }
+.constellation .cs-meta .time { color: var(--text-faint); }
+
+.constellation .cs-actions { display: flex; gap: 6px; padding-top: 2px; }
+.constellation .cs-actions button { flex: 1; justify-content: center; }
+
+.home-empty { text-align: center; color: var(--text-dim); padding: 34px; border: 1px dashed var(--line-2); border-radius: var(--r-xl); font-size: 13.5px; }

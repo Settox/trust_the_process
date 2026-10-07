@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Spazio Teorie</title>
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="stylesheet" href="./css/tokens.css">
+<link rel="stylesheet" href="./css/base.css">
+<link rel="stylesheet" href="./css/starfield.css">
+<link rel="stylesheet" href="./css/shell.css">
+<link rel="stylesheet" href="./css/home.css">
+<link rel="stylesheet" href="./css/map.css">
+<link rel="stylesheet" href="./css/collection.css">
+<link rel="stylesheet" href="./css/modals.css">
+<link rel="stylesheet" href="./css/responsive.css">
+</head>
+<body>
+<div id="nebula"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<div class="app">
+  <nav class="rail" id="rail" aria-label="Navigazione principale">
+    <a class="rail-brand" href="#/home" aria-label="Spazio Teorie — Home">
+      <span class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.5 5.6 6.1.6-4.6 4.1 1.3 6-5.3-3.2L6.7 19.3 8 13.3 3.4 9.2l6.1-.6z"/></svg></span>
+    </a>
+    <div class="rail-items">
+      <button class="rail-item" data-route="home" title="Home" aria-label="Home">
+        <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/></svg></span><span class="rail-lbl">Home</span>
+      </button>
+      <button class="rail-item" data-route="map" title="Mappa" aria-label="Mappa">
+        <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></span><span class="rail-lbl">Mappa</span>
+      </button>
+      <button class="rail-item" data-route="collection" title="Raccolta" aria-label="Raccolta">
+        <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></span><span class="rail-lbl">Raccolta</span>
+      </button>
+      <button class="rail-item" data-route="settings" title="Impostazioni" aria-label="Impostazioni">
+        <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span><span class="rail-lbl">Impostazioni</span>
+      </button>
+    </div>
+    <div class="rail-spacer"></div>
+    <button class="rail-item" id="paletteBtn" title="Command palette (Ctrl/Cmd+K)" aria-label="Apri command palette">
+      <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6a3 3 0 1 0-3 3h3zM15 6a3 3 0 1 1 3 3h-3zM9 18a3 3 0 1 1-3-3h3zM15 18a3 3 0 1 0 3-3h-3zM9 9h6M9 15h6"/></svg></span><span class="rail-lbl">Azioni</span>
+    </button>
+    <button class="rail-item" id="helpBtn" title="Come si usa" aria-label="Come si usa">
+      <span class="rail-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M9.4 9.2a2.7 2.7 0 0 1 5.3.8c0 1.8-2.7 2.2-2.7 3.8"/><path d="M12 17.2h.01"/></svg></span><span class="rail-lbl">Aiuto</span>
+    </button>
+  </nav>
+
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-title">
+        <span class="tb-kicker">Spazio Teorie</span>
+        <span class="tb-name" id="spaceLabel">Il mio spazio personale</span>
+      </div>
+      <div class="status" id="status" role="status" aria-live="polite"><span class="dot"></span><span id="statusText">Personale · salvato</span></div>
+      <div class="topbar-actions">
+        <button class="ctl" id="addNodeBtn" title="Nuovo nodo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Nodo</button>
+        <button class="ctl" id="penBtn" title="Modalità penna"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.7 21.3a1 1 0 0 1-1.4 0l-1.6-1.6a1 1 0 0 1 0-1.4l5.6-5.6a1 1 0 0 1 1.4 0l1.6 1.6a1 1 0 0 1 0 1.4z"/><path d="m18 13-1.4-6.9a1 1 0 0 0-.7-.8L3.2 2a1 1 0 0 0-1.2 1.2l3.3 12.7a1 1 0 0 0 .8.7L13 18"/><path d="m2.3 2.3 7.3 7.3"/><circle cx="11" cy="11" r="2"/></svg> Penna</button>
+        <button class="ctl accent" id="collabBtn" title="Collaborazione"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M15 3.1a4 4 0 0 1 0 7.8"/></svg> Collabora</button>
+      </div>
+    </header>
+
+    <main class="views">
+      <!-- ============ HOME ============ -->
+      <section class="view" id="view-home" aria-label="Home">
+        <div class="home-hero">
+          <h1>Le tue costellazioni</h1>
+          <p>Rientra nei tuoi spazi, o creane uno nuovo per collaborare in tempo reale.</p>
+        </div>
+        <div class="home-create">
+          <input type="text" id="homeRoomInput" placeholder="Nome della stanza (es. mio-progetto-01)" spellcheck="false" aria-label="Nome della stanza">
+          <button class="ctl accent" id="homeRoomJoin">Entra / Crea</button>
+        </div>
+        <div class="home-toolbar">
+          <div class="searchbox"><span>⌕</span><input type="text" id="homeSearch" placeholder="Cerca tra gli spazi…" spellcheck="false" aria-label="Cerca spazi"></div>
+          <select id="homeSort" aria-label="Ordinamento">
+            <option value="recent">Per ultima apertura</option>
+            <option value="name">Per nome</option>
+          </select>
+        </div>
+        <div class="home-list">
+          <div class="home-personal" id="homePersonal"></div>
+          <h2 class="home-sub">Spazi di collaborazione</h2>
+          <div class="home-grid" id="homeGrid"></div>
+        </div>
+      </section>
+
+      <!-- ============ MAPPA ============ -->
+      <section class="view" id="view-map" aria-label="Mappa">
+        <div class="map-view-wrap">
+        <div class="map-subbar">
+          <div class="tabs" id="tabs" role="tablist" aria-label="Pagine"></div>
+          <div class="spacer"></div>
+          <div class="searchbox node-search" title="Cerca nei nodi (Invio = prossimo, Maiusc+Invio = precedente)">
+            <span>⌕</span>
+            <input type="text" id="nodeSearch" placeholder="Cerca nei nodi…" spellcheck="false" aria-label="Cerca nei nodi">
+            <span id="nodeSearchInfo"></span>
+            <button class="ico" id="nsPrev" title="Precedente">▲</button>
+            <button class="ico" id="nsNext" title="Successivo">▼</button>
+          </div>
+        </div>
+        <div class="map-layout">
+          <aside class="collection-sidebar" id="collectionSidebar" aria-label="Raccolta">
+            <div id="collectionHost"></div>
+          </aside>
+          <div class="map-stage" id="viewport">
+            <div id="world">
+              <svg id="svg" width="1" height="1" aria-hidden="true">
+                <defs>
+                  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3" result="b"/>
+                    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                  </filter>
+                </defs>
+              </svg>
+              <svg id="drawSvg" width="1" height="1" aria-hidden="true"></svg>
+            </div>
+            <button class="ctl mini" id="collToggle" title="Mostra / nascondi la Raccolta" aria-label="Mostra o nascondi la Raccolta">«</button>
+            <div id="ctxBar" aria-label="Pannello contestuale"></div>
+            <div id="cursors" aria-hidden="true"></div>
+            <div id="zoomHud">
+              <button id="zoomOut" title="Riduci" aria-label="Riduci">−</button>
+              <span id="zoomPct">100%</span>
+              <button id="zoomIn" title="Ingrandisci" aria-label="Ingrandisci">+</button>
+              <button id="zoomFit" title="Centra tutti i nodi" aria-label="Centra tutti i nodi">⤢</button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <!-- ============ RACCOLTA ============ -->
+      <section class="view" id="view-collection" aria-label="Raccolta">
+        <div class="collection-full" id="collectionHostFull"></div>
+      </section>
+
+      <!-- ============ IMPOSTAZIONI ============ -->
+      <section class="view" id="view-settings" aria-label="Impostazioni">
+        <div id="settingsHost">
+          <h2 class="settings-title">Impostazioni</h2>
+          <div class="settings-tabs">
+            <button class="on" data-settab="general">Generale</button>
+            <button data-settab="voice">Voce</button>
+            <button data-settab="translate">Traduzione</button>
+            <button data-settab="ai">Modelli AI</button>
+            <button data-settab="collab">Collaborazione</button>
+          </div>
+          <div class="settings-section active" id="set-general">
+            <div class="field"><label>Il tuo nome (visibile agli amici nella stanza)</label><input type="text" id="setMyName" placeholder="es. Marco"></div>
+            <div class="field" style="margin-top:12px;"><label><input type="checkbox" id="setDblNode" checked> Doppio clic sulla mappa per creare un nodo</label></div>
+            <div class="field" style="margin-top:18px;"><label>Backup dello spazio corrente</label>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="ctl" id="exportBtn">Esporta JSON</button>
+                <button class="ctl" id="importBtn">Importa JSON…</button>
+              </div>
+              <p class="hint" style="margin-top:6px;">L'esportazione salva pagine, nodi, collegamenti, cartelle e volumi (testo). Immagini, video e PDF restano nel browser: per trasferirli usa una stanza di collaborazione.</p>
+            </div>
+          </div>
+          <div class="settings-section" id="set-voice">
+            <div class="field"><label>Servizio vocale preferito</label>
+              <select id="setTtsProv">
+                <option value="browser">Voce del browser (gratuito)</option>
+                <option value="eleven">ElevenLabs</option>
+                <option value="openai">OpenAI / compatibile</option>
+                <option value="google">Google Cloud TTS</option>
+                <option value="gemini">Gemini</option>
+              </select>
+            </div>
+            <div class="prov-grp" data-prov="browser">
+              <div class="field"><label>Voce di sistema</label><select id="setSysVoice"></select></div>
+              <div class="field" style="margin-top:10px;"><label>Tono (pitch)</label><input type="number" id="setSysPitch" min="0.5" max="2" step="0.1" value="1"></div>
+              <div class="field" style="margin-top:10px;"><label>Lingua di lettura predefinita</label><input type="text" id="setSpeechLang" placeholder="it-IT"></div>
+            </div>
+            <div class="prov-grp" data-prov="eleven">
+              <div class="field"><label>Chiave ElevenLabs</label><input type="password" id="setElKey" placeholder="xi-api-key"></div>
+              <div class="field" style="margin-top:10px;"><label>ID voce</label><input type="text" id="setElVoice" placeholder="21m00Tcm4TlvDq8ikWAM"></div>
+              <div class="field" style="margin-top:10px;"><label>Modello</label><input type="text" id="setElModel" placeholder="eleven_multilingual_v2"></div>
+            </div>
+            <div class="prov-grp" data-prov="openai">
+              <div class="field"><label>URL servizio (OpenAI compatibile)</label><input type="text" id="setOaUrl" placeholder="https://api.openai.com/v1"></div>
+              <div class="field" style="margin-top:10px;"><label>Chiave API</label><input type="password" id="setOaKey"></div>
+              <div class="field" style="margin-top:10px;"><label>Modello</label><input type="text" id="setOaModel" placeholder="gpt-4o-mini-tts"></div>
+              <div class="field" style="margin-top:10px;"><label>Voce</label><input type="text" id="setOaVoice" placeholder="alloy"></div>
+            </div>
+            <div class="prov-grp" data-prov="google">
+              <div class="field"><label>Chiave Google Cloud</label><input type="password" id="setGcKey"></div>
+              <div class="field" style="margin-top:10px;"><label>Voce</label><input type="text" id="setGcVoice" placeholder="it-IT-Neural2-A"></div>
+            </div>
+            <div class="prov-grp" data-prov="gemini">
+              <div class="field"><label>Chiave Gemini</label><input type="password" id="setGmKey"></div>
+              <div class="field" style="margin-top:10px;"><label>Modello</label><input type="text" id="setGmModel" placeholder="gemini-2.5-flash-preview-tts"></div>
+              <div class="field" style="margin-top:10px;"><label>Voce</label><input type="text" id="setGmVoice" placeholder="Kore"></div>
+              <div class="field" style="margin-top:10px;"><label>Richieste al minuto</label><input type="number" id="setGmRpm" min="1" max="60" step="1"></div>
+            </div>
+          </div>
+          <div class="settings-section" id="set-translate">
+            <div class="field"><label>Servizio di traduzione preferito</label>
+              <select id="setTrProv">
+                <option value="google">Traduttore web gratuito</option>
+                <option value="browser">Traduttore del browser (Chrome)</option>
+                <option value="libre">LibreTranslate</option>
+                <option value="ai">Modello AI (Gemini, Claude, GPT...)</option>
+              </select>
+            </div>
+            <div class="field" style="margin-top:10px;"><label>Lingua di destinazione predefinita</label><select id="setTrTarget"></select></div>
+            <div class="prov-grp" data-trprov="libre">
+              <div class="field"><label>URL LibreTranslate</label><input type="text" id="setLtUrl" placeholder="https://libretranslate.com"></div>
+              <div class="field" style="margin-top:10px;"><label>Chiave API (se richiesta)</label><input type="password" id="setLtKey"></div>
+            </div>
+            <div class="prov-grp" data-trprov="ai">
+              <p class="hint">La traduzione con AI usa i modelli configurati nella scheda <b>Modelli AI</b> (con fallback automatico sul modello successivo se uno fallisce).</p>
+            </div>
+          </div>
+          <div class="settings-section" id="set-ai">
+            <p class="hint">I modelli configurati possono essere usati per tradurre e per generare riassunti o spiegazioni dai nodi.</p>
+            <div id="aiProfilesList"></div>
+          </div>
+          <div class="settings-section" id="set-collab">
+            <p class="hint">La collaborazione usa P2P (Trystero) con fallback su Supabase per il salvataggio persistente del grafo e dei file.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- overlays -->
+<div id="ctx" role="menu"></div>
+<div id="toast" role="status"></div>
+
+<div id="commandPalette" class="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
+  <div class="palette-box">
+    <input type="text" id="paletteInput" placeholder="Cerca azioni…" spellcheck="false" aria-label="Cerca azioni">
+    <div class="palette-list" id="paletteList"></div>
+  </div>
+</div>
+
+<!-- input file -->
+<input type="file" id="imageFile" accept="image/*" class="hidden">
+<input type="file" id="videoFile" accept="video/*" class="hidden">
+<input type="file" id="uploadFile" accept=".pdf,.txt,.md,.markdown,image/*,video/*" class="hidden">
+<input type="file" id="importFile" accept="application/json" class="hidden">
+
+<!-- lightbox -->
+<div id="lightbox" class="hidden" aria-hidden="true">
+  <div id="lbStage"><img id="lbImg" alt="" draggable="false"></div>
+  <div id="lbBar"><button class="ctl mini" id="lbOut" aria-label="Riduci">−</button><span id="lbZoom">100%</span><button class="ctl mini" id="lbIn" aria-label="Ingrandisci">+</button><button class="ctl mini" id="lbFit">Adatta</button><button class="ctl mini" id="lbClose">×</button></div>
+</div>
+
+<!-- crop -->
+<div class="modal" id="cropModal" role="dialog" aria-modal="true" aria-label="Ritaglia immagine">
+  <div class="modal-box">
+    <div class="modal-head"><span>Ritaglia immagine</span><button class="x" id="cropCancel" aria-label="Chiudi">×</button></div>
+    <div id="cropStage"><img id="cropImg" draggable="false" alt=""><div id="cropBox"><span class="ch nw"></span><span class="ch ne"></span><span class="ch sw"></span><span class="ch se"></span></div></div>
+    <div class="modal-foot"><button class="ctl" id="cropCancel2">Annulla</button><button class="ctl accent" id="cropOk">Ritaglia</button></div>
+  </div>
+</div>
+
+<!-- PDF -->
+<div class="modal" id="pdfModal" role="dialog" aria-modal="true" aria-label="Lettore PDF">
+  <div class="modal-box pdf-box">
+    <div class="modal-head"><span id="pdfTitle">PDF</span><button class="x" id="pdfClose" aria-label="Chiudi">×</button></div>
+    <div class="pdf-toolbar">
+      <button class="ctl mini" id="pdfPrev">Indietro</button>
+      <input id="pdfGo" class="pdf-go" type="number" min="1" value="1" aria-label="Vai a pagina"><span class="pg" id="pdfPageInfo">/ 1</span>
+      <button class="ctl mini" id="pdfNext">Avanti</button>
+      <span class="divider"></span>
+      <button class="ctl mini" id="pdfZoomOut" aria-label="Riduci">−</button><span class="pg" id="pdfZoomInfo">100%</span><button class="ctl mini" id="pdfZoomIn" aria-label="Ingrandisci">+</button>
+      <span class="spacer"></span>
+      <button class="ctl mini" id="pdfRead">Leggi</button>
+      <button class="ctl mini" id="pdfCopy">Copia testo</button>
+      <button class="ctl mini accent" id="pdfCutText">Nodo dal testo</button>
+      <button class="ctl mini" id="pdfCutImg">Nodo da un'area</button>
+    </div>
+    <div id="pdfScroll"><div id="pdfPages"></div>
+      <div id="pdfCropBox"><span class="ch nw"></span><span class="ch ne"></span><span class="ch sw"></span><span class="ch se"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Collaborazione -->
+<div class="modal" id="collabModal" role="dialog" aria-modal="true" aria-label="Collaborazione">
+  <div class="modal-box collab-box">
+    <div class="modal-head"><span>Collaborazione in tempo reale</span><button class="x" id="collabClose" aria-label="Chiudi">×</button></div>
+    <div class="collab-body">
+      <div class="field"><label>Nome della stanza</label><input type="text" id="roomInput" placeholder="es. mio-progetto-01" spellcheck="false"></div>
+      <div style="display:flex;gap:8px;">
+        <button class="ctl accent" id="roomJoin">Entra / Crea</button>
+        <button class="ctl" id="roomLeave" style="display:none;">Esci</button>
+        <button class="ctl" id="roomCopyLink">Copia link</button>
+      </div>
+      <div class="peers" id="peers">Non connesso</div>
+      <div class="hint">Condividi il link con gli amici: chi lo apre entra nella stessa stanza. Grafo, testi, immagini e PDF si sincronizzano direttamente tra i vostri browser (peer-to-peer). Chi entra riceve lo stato di chi era già nella stanza (il suo progetto locale viene salvato come backup).</div>
+    </div>
+  </div>
+</div>
+
+<!-- Traduci -->
+<div class="modal" id="trModal" role="dialog" aria-modal="true" aria-label="Traduci">
+  <div class="modal-box collab-box">
+    <div class="modal-head"><span id="trTitle">Traduci</span><button class="x" id="trClose" aria-label="Chiudi">×</button></div>
+    <div class="collab-body">
+      <div class="field"><label>Traduci in</label><select id="trLang"></select></div>
+      <div class="hint" id="trProvNote"></div>
+      <div class="tr-prog"><div id="trBar"></div></div>
+      <div class="hint" id="trInfo"></div>
+      <div class="hint">La traduzione viene salvata come nuovo volume nella scheda <b>Tradotti</b>; l'originale non viene toccato.</div>
+    </div>
+    <div class="modal-foot"><button class="ctl ghost" id="trSettings">Impostazioni</button><span class="spacer"></span><button class="ctl" id="trCancel">Chiudi</button><button class="ctl" id="trStop" style="display:none;color:var(--danger)">Interrompi</button><button class="ctl accent" id="trGo">Traduci</button></div>
+  </div>
+</div>
+
+<!-- Lettura -->
+<div class="modal" id="readerModal" role="dialog" aria-modal="true" aria-label="Lettura ad alta voce">
+  <div class="modal-box rd-box">
+    <div class="modal-head"><span id="rdTitle">Lettura</span><button class="x" id="rdClose" aria-label="Chiudi">×</button></div>
+    <div class="rd-bar">
+      <button class="ctl mini" id="rdPrev" aria-label="Frase precedente">⏮</button>
+      <button class="ctl accent" id="rdPlay" aria-label="Play / Pausa">▶</button>
+      <button class="ctl mini" id="rdNext" aria-label="Frase successiva">⏭</button>
+      <select id="rdSpeed" class="rd-sel" aria-label="Velocità"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+      <span id="rdCount" class="rd-count"></span>
+      <select id="rdNodeN" class="rd-sel" aria-label="Brani per nodo"><option value="1">1 brano</option><option value="2">2 brani</option><option value="3">3 brani</option><option value="5">5 brani</option></select>
+      <button class="ctl mini" id="rdNode">+ Nodo</button>
+      <button class="ctl mini" id="rdCut">✂ Taglia</button>
+      <button class="ico" id="rdUndoCut" aria-label="Annulla taglio">↶</button>
+      <button class="ico" id="rdMini" aria-label="Riduci a barra">▁</button>
+      <span class="spacer"></span>
+      <select id="rdProv" class="rd-sel" aria-label="Servizio vocale"></select>
+    </div>
+    <div id="rdNow" class="rd-now"></div>
+    <div id="rdList" class="rd-list"></div>
+    <div class="rd-foot" id="rdChars"></div>
+  </div>
+</div>
+
+<!-- Aiuto -->
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-label="Come si usa">
+  <div class="help-box">
+    <h3>Come si usa</h3>
+    <div id="helpContent">
+      <p><b>Mappa.</b> Doppio clic sul vuoto per creare un nodo (disattivabile nelle Impostazioni). Trascina dalla maniglia ⋮⋮ per spostarlo, dall'angolo per ridimensionarlo, dal pallino laterale per collegarlo a un altro nodo. Tasto destro su nodi, collegamenti e sfondo per tutte le azioni.</p>
+      <p><b>Penna.</b> Il pulsante Penna nella barra in alto attiva penna, evidenziatore e gomma: disegna a mano libera sopra la mappa.</p>
+      <p><b>Raccolta.</b> Nella barra laterale della mappa (o nella vista dedicata) tieni volumi di testo, PDF, immagini e video, organizzati in cartelle con trascinamento. «Carica file» crea un nuovo volume al volo.</p>
+      <p><b>PDF.</b> Apri un PDF dalla Raccolta: puoi selezionare frasi e trasformarle in nodi collegati alla pagina, oppure ritagliare un'area come immagine.</p>
+      <p><b>Voce.</b> «Leggi ad alta voce» legge un volume frase per frase; con «+ Nodo» e «✂ Taglia» trasformi i brani in nodi mentre ascolti.</p>
+      <p><b>Traduzione.</b> «Traduci» crea una copia tradotta del volume (anche PDF con lo stesso aspetto) nella scheda Tradotti. Configura servizio e chiavi nelle Impostazioni.</p>
+      <p><b>Collaborazione.</b> «Collabora» ti fa entrare in una stanza: condividi il link e lavorate sulla stessa mappa in tempo reale, direttamente tra i browser. Uscendo dalla stanza ritrovi il tuo spazio personale com'era.</p>
+      <p><b>Command palette.</b> Ctrl/Cmd+K apre la ricerca di tutte le azioni; frecce e Invio per scegliere.</p>
+    </div>
+    <button class="ctl" id="helpClose">Chiudi</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="./supabase-config.js"></script>
+<script type="module" src="./js/main.js"></script>
+
+<div class="modal" id="promptModal" role="dialog" aria-modal="true" aria-label="Prompt">
+  <div class="modal-box">
+    <div class="modal-head"><span class="prompt-title"></span><button class="x" id="promptCancel" aria-label="Chiudi">×</button></div>
+    <div class="modal-body"><input type="text" id="promptInput" spellcheck="false"></div>
+    <div class="modal-foot"><button class="ctl" id="promptCancel2">Annulla</button><button class="ctl accent" id="promptOk">OK</button></div>
+  </div>
+</div>
+<div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-label="Conferma">
+  <div class="modal-box">
+    <div class="modal-head"><span>Conferma</span><button class="x" id="confirmCancel" aria-label="Chiudi">×</button></div>
+    <div class="modal-body"><p id="confirmMsg"></p></div>
+    <div class="modal-foot"><button class="ctl accent" id="confirmOk">Conferma</button><button class="ctl" id="confirmCancel2">Annulla</button></div>
+  </div>
+</div>
+</body>
+</html>
