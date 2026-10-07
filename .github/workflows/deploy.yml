@@ -1,3 +1,5 @@
-npm ci
+- name: Install dependencies
+  run: npm ci
 
-npm run build
+- name: Build
+  run: npm run build
